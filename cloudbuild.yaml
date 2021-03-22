@@ -1,0 +1,14 @@
+1steps:
+2  # build the container image
+3- name: 'gcr.io/cloud-builders/docker'
+4  args: ['build', '-t', 'gcr.io/$PROJECT_ID/hello-cloud-run:${SHORT_SHA}', '.']
+5  # push the container image to Container Registry
+6- name: 'gcr.io/cloud-builders/docker'
+7  args: ['push', 'gcr.io/$PROJECT_ID/hello-cloud-run']
+8  # deploy container image to Cloud Run
+9- name: 'gcr.io/cloud-builders/gcloud'
+10  args: ['beta', 'run', 'deploy', 'hello-cloud-run', '--image', 'gcr.io/$PROJECT_ID/hello-cloud-run:${SHORT_SHA}', '--region', 'us-central1', '--allow-unauthenticated']
+11  env:
+12  - 'PORT=8080'
+13images:
+14- gcr.io/$PROJECT_ID/hello-cloud-run
