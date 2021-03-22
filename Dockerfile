@@ -1,3 +1,3 @@
-FROM microsoft/nanoserver
-COPY testfile.txt c:\\
-RUN dir c:\
+FROM httpd:2.4
+COPY ./public-html/ /usr/local/apache2/htdocs/
+PORT 80
